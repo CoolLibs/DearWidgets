@@ -1097,13 +1097,13 @@ namespace ImWidgets {
 			const bool focus_requested = temp_input_allowed && ImGui::FocusableItemRegister(window, id);
 			const bool clicked = (hovered && g.IO.MouseClicked[0]);
 			const bool double_clicked = (hovered && g.IO.MouseDoubleClicked[0]);
-			if (focus_requested || clicked || double_clicked || g.NavActivateId == id || g.NavInputId == id)
+			if (focus_requested || clicked || double_clicked || g.NavActivateId == id /*|| g.NavInputId == id*/)
 			{
 				ImGui::SetActiveID(id, window);
 				ImGui::SetFocusID(id, window);
 				ImGui::FocusWindow(window);
 				g.ActiveIdUsingNavDirMask = (1 << ImGuiDir_Left) | (1 << ImGuiDir_Right);
-				if (temp_input_allowed && (focus_requested || (clicked && g.IO.KeyCtrl) || double_clicked || g.NavInputId == id))
+				if (temp_input_allowed && (focus_requested || (clicked && g.IO.KeyCtrl) || double_clicked /*|| g.NavInputId == id*/))
 				{
 					temp_input_is_active = true;
 					ImGui::FocusableItemUnregister(window);
@@ -1111,13 +1111,13 @@ namespace ImWidgets {
 			}
 			// Experimental: simple click (without moving) turns Drag into an InputText
 			// FIXME: Currently polling ImGuiConfigFlags_IsTouchScreen, may either poll an hypothetical ImGuiBackendFlags_HasKeyboard and/or an explicit drag settings.
-			if (g.IO.ConfigDragClickToInputText && temp_input_allowed && !temp_input_is_active)
-				if (g.ActiveId == id && hovered && g.IO.MouseReleased[0] && !ImGui::IsMouseDragPastThreshold(0, g.IO.MouseDragThreshold * 0.5f/*DRAG_MOUSE_THRESHOLD_FACTOR*/))
-				{
-					g.NavInputId = id;
-					temp_input_is_active = true;
-					ImGui::FocusableItemUnregister(window);
-				}
+			// if (g.IO.ConfigDragClickToInputText && temp_input_allowed && !temp_input_is_active)
+			// 	if (g.ActiveId == id && hovered && g.IO.MouseReleased[0] && !ImGui::IsMouseDragPastThreshold(0, g.IO.MouseDragThreshold * 0.5f/*DRAG_MOUSE_THRESHOLD_FACTOR*/))
+			// 	{
+			// 		g.NavInputId = id;
+			// 		temp_input_is_active = true;
+			// 		ImGui::FocusableItemUnregister(window);
+			// 	}
 		}
 
 		if (temp_input_is_active)
